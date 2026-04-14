@@ -1,0 +1,23 @@
+name: HTML Unit Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run HTML Validation
+        uses: wjdp/htmltest-action@v0.16.0
+        with:
+          # Point this to the folder containing your index.html
+          query: .
+         
+      - name: Upload Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-test-results
+          path: tmp/.htmltest/ # Default path for reports
